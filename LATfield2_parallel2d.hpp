@@ -820,7 +820,7 @@ template<class Type> void Parallel2d::max(Type* array, int len)
     Type* gather;
     if( rank() == root() ) gather = new Type[len*size()];
     MPI_Gather( array, len*sizeof(Type), MPI_BYTE, 
-               gather, len*sizeof(Type), MPI_BYTE, this->root(), world_comm_);
+               gather, len*sizeof(Type), MPI_BYTE, this->root(), lat_world_comm_);
     
     //Find max on root
     if( isRoot() )
@@ -836,7 +836,7 @@ template<class Type> void Parallel2d::max(Type* array, int len)
     }
     
     //Broadcast result
-    MPI_Bcast( array, len*sizeof(Type), MPI_BYTE, this->root(), world_comm_);
+    MPI_Bcast( array, len*sizeof(Type), MPI_BYTE, this->root(), lat_world_comm_);
     // Tidy up (bug found by MDP 12/4/06)
     if( rank() == root() ) delete[] gather;
 }
@@ -914,7 +914,7 @@ template<class Type> void Parallel2d::min(Type* array, int len)
     Type* gather;
     if( rank() == root() ) gather = new Type[len*size()];
     MPI_Gather( array, len*sizeof(Type), MPI_BYTE, 
-               gather, len*sizeof(Type), MPI_BYTE, this->root(), world_comm_);
+               gather, len*sizeof(Type), MPI_BYTE, this->root(), lat_world_comm_);
     
     //Find min on root
     if( isRoot() )
@@ -930,7 +930,7 @@ template<class Type> void Parallel2d::min(Type* array, int len)
     }
     
     //Broadcast result
-    MPI_Bcast( array, len*sizeof(Type), MPI_BYTE, this->root(), world_comm_);   
+    MPI_Bcast( array, len*sizeof(Type), MPI_BYTE, this->root(), lat_world_comm_);
     // Tidy up (bug found by MDP 12/4/06)
     if( rank() == root() ) delete[] gather;
 }
@@ -1031,12 +1031,12 @@ template<class Type> void Parallel2d::broadcast_dim1(Type* array, int len, int f
 
 template<class Type> void Parallel2d::send(Type& message, int to)
 {
-	MPI_Send( &message, sizeof(Type), MPI_BYTE, to, 0, world_comm_ );
+	MPI_Send( &message, sizeof(Type), MPI_BYTE, to, 0, lat_world_comm_ );
 }
 
 template<class Type> void Parallel2d::send(Type* array, int len, int to)
 {
-	MPI_Send( array, len*sizeof(Type), MPI_BYTE, to, 0, world_comm_ );
+	MPI_Send( array, len*sizeof(Type), MPI_BYTE, to, 0, lat_world_comm_ );
 }
 
 template<class Type> void Parallel2d::send_dim0(Type& message, int to)
@@ -1068,13 +1068,13 @@ template<class Type> void Parallel2d::send_dim1(Type* array, int len, int to)
 template<class Type> void Parallel2d::receive(Type& message, int from)
 {
 	MPI_Status  status;
-	MPI_Recv( &message, sizeof(Type), MPI_BYTE, from, 0, world_comm_, &status);
+	MPI_Recv( &message, sizeof(Type), MPI_BYTE, from, 0, lat_world_comm_, &status);
 }
 
 template<class Type> void Parallel2d::receive(Type* array, int len, int from)
 {
 	MPI_Status  status;
-	MPI_Recv( array, len*sizeof(Type), MPI_BYTE, from, 0, world_comm_, &status);
+	MPI_Recv( array, len*sizeof(Type), MPI_BYTE, from, 0, lat_world_comm_, &status);
 }
 
 template<class Type> void Parallel2d::receive_dim0(Type& message, int from)

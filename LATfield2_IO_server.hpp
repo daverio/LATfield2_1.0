@@ -329,12 +329,13 @@ int IOserver::openOstream()
 }
 void IOserver::closeOstream()
 {
+    MPI_Barrier(computeComm_);
     if(computeRank_==0)
     {
         int send=CONTROL_CLOSE_OSTREAM;
         MPI_Send(&send,1,MPI::INT,0,IO_FILE_CONTROL_TAG,syncLineComm_);
     }
-    MPI_Barrier(computeComm_);
+    
 }
 int IOserver::createFile(string filename)
 {
