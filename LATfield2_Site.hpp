@@ -320,12 +320,11 @@ bool Site::setCoord(int* r)
 
 bool Site::setCoord(int x, int y=0, int z=0)
 {
-	int* r = new int[3];
+	int r[3];
 	r[0]=x;
 	r[1]=y;
 	r[2]=z;
 	return this->setCoord(r);
-	delete[] r;
 }    
 Lattice& Site::lattice() { return *lattice_ ; }
 
@@ -461,12 +460,12 @@ bool cKSite::setCoord(int* r_asked)
 }
 bool cKSite::setCoord(int x, int y=0, int z=0)
 {
-	int* r = new int[3];
+	int r[3];
 	r[0]=x;
 	r[1]=y;
 	r[2]=z;
 	return this->setCoord(r);
-	delete[] r;
+
 }   
 
 /*! \class rKSite  
@@ -598,12 +597,11 @@ bool rKSite::setCoord(int* r_asked)
 }  
 bool rKSite::setCoord(int x, int y=0, int z=0)
 {
-	int* r = new int[3];
+	int r[3];
 	r[0]=x;
 	r[1]=y;
 	r[2]=z;
 	return this->setCoord(r);
-	delete[] r;
 } 
 
 

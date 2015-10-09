@@ -3,9 +3,9 @@
 
 \section intro_sec Introduction
 
-LATField 2.0, the second version of the LATfield library is a simple C++ framework for lattice based simulation on massively parallel computer.
+LATField2, the second version of the LATfield library is a simple C++ framework for lattice based simulation on massively parallel computer.
 
-Version 2.0 changes:
+Changes in respect to LATfield:
 
 - the parallelization has been rebuilt to distribute 2 of the lattice dimensions into a 2-dimensional MPI process grid.
 - A FFT wrapper for 3d cubic lattices. 
